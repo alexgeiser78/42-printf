@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:28:20 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/11 13:48:31 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/13 18:19:21 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(void)
 {
 	char a = 'q'; // %c
 	char b[] = "wertyuiop"; // %s
-	*c = "asdf"; // %p
+	char *c = "asdf"; // %p
 	int d = 789; // %d
 	int e = 456; // %i
 	int f = 123; // %u
@@ -34,3 +34,4 @@ int main(void)
 	ft_printf("hexadecmaj %X\n", h);
 	ft_printf("% %%\n", i); 
 	return (0);
+}
