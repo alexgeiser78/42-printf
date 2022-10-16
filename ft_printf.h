@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 15:55:16 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/13 18:19:00 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:15:34 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 
 #include <stdarg.h>
-
+#include "libft.h"
 int	ft_printf(const char *format, ...);
 
 #endif
