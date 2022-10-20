@@ -6,13 +6,13 @@
 #    By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/11 12:13:48 by ageiser           #+#    #+#              #
-#    Updated: 2022/10/15 19:15:31 by ageiser          ###   ########.fr        #
+#    Updated: 2022/10/20 16:26:53 by ageiser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c ft_strchr.c
+SRC = ft_printf.c ft_itoa.c
 
 CFLAGS = -Wall -Wextra -Werror
 

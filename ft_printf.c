@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/16 13:59:52 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:48:41 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,62 @@
 #include <unistd.h>
 
 
+static int	ft_char_writer(int c)
+{
+	write(1, &c, 1);
+	return (1);
+}	
+/*
+static int	ft_string_writer(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+	{
+		ft_char_writer("(null)");
+		return (6);
+	}
+	while (str[i])
+	{
+	write(1, &str[i], 1);
+	i++;
+	}
+	return (i);
+}	
+*/
+
+
 static void	ft_text_writer(int c)
 {
 	write(1, &c, 1);
 }
 
-static void ft_putnbr(int nb)
+/*
+static int ft_number_writer(int nb)
 {	
-
+	int	len;
+	char	*num; 
+	len = 0;
+	num = ft_itoa(nb);
+	len = ft_string_writer(num);
+	free(num);
+	return (len);	
 }
-
-static int ft_args_solver(va_list args, const char *format)
+*/
+static int ft_args_solver(va_list args, const char format)
 {
-	int i;
-	i = 0;
-
-	while (*format && *format != '%')
-	{
-	if (format[i] != '%')	
-	{
-		i++;
-	}
-	else if (format[i] == '%')
-	{
-		if (format[i + 1] == 'd')
+		if (format == 'c')
 		{
-			i = i + 1;
-			int d = (va_arg(args, int));	
-		ft_putnbr(d);	
+		   ft_char_writer(va_arg(args, int));
 		}
+//		else if (format == 'd')
+//			ft_number_writer(va_arg(args, int));
 		else
-			return (i);
-	}
-	}
-	return (i);
+			return (1);
+	
+	
+	return (1);
 
 }
 
@@ -60,12 +82,13 @@ va_start(args, format);
 print_length = 0;
 i = 0;
 
-while (format[i])
+while (format[i] != '\0')
 {
 	if (format[i] == '%')
 	{
-	ft_args_solver(args, &format[i + 1]);
+	ft_args_solver(args, format[i + 1]);
 	}
+
 	else
 	{
 	ft_text_writer(format[i]);
@@ -74,6 +97,6 @@ while (format[i])
 }
 va_end(args);
 
-return (print_length);
+return (i);
 }
 
