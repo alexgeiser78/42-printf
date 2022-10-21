@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:28:20 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/20 18:42:51 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:22:39 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ int main(void)
 	int h = 258; // %X
 	int i = 0;   // %%
 	
+	ft_printf("");
+	ft_printf("Pleaides\n");
 	ft_printf("char = %c\n", a);
-//	ft_printf("string = %s\n", b);
-//	ft_printf("pointeur = %p\n", c);
+	ft_printf("string = %s\n", b);
+	ft_printf("pointeur = %p\n", c);
 //	ft_printf("decimal = %d\n", d);
 //	ft_printf("entier = %i\n", e);
 //	ft_printf("nonsigne = %u\n", f);
