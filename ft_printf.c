@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/21 19:22:57 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/22 18:53:41 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	ft_char_writer(int c)
 	else
 		return (1);
 }	
+// ligne 20 protection de la fonction
 
 // cas print string %s
 static int	ft_string_writer(char *str)
@@ -29,11 +30,11 @@ static int	ft_string_writer(char *str)
 	int	i;
 
 	i = 0;
-/*	if (str == NULL)
+	if (str == NULL)
 	{
-		ft_char_writer("");
-		return (0);
-	}*/
+		write(1, "(null)", 6);
+		return (6);
+	}
 	while (str[i])
 	{
 		write(1, &str[i], 1);
@@ -68,23 +69,12 @@ static int	ft_pointer_writer(unsigned int ptr)
 	i = i + 1;
 	}	
 	else 
-	{	
+	{
 		ft_pointer_converter(ptr);
 	i++;
 	}		
-	return (i);		
-
+	return (i);
 }
-
-// cas texte
-static int	ft_text_writer(int c)
-{
-	if (write(1, &c, 1) < 0)
-		return (-1);
-	else
-		return (1);
-}
-//ligne 46 protection de la function write
 /*
 static int ft_number_writer(int nb)
 {	
@@ -100,42 +90,49 @@ static int ft_number_writer(int nb)
 
 static int	ft_args_solver(va_list args, const char format)
 {
+	int	print_length;
+
+	print_length = 0;
 	if (format == 'c')
-		ft_char_writer(va_arg(args, int));
+		print_length = print_length + ft_char_writer(va_arg(args, int));
 	else if (format == 's')
-		ft_string_writer(va_arg(args, char *));
+		print_length = print_length + ft_string_writer(va_arg(args, char *));
 	else if (format == 'p')
-		ft_pointer_writer(va_arg(args, unsigned int));
+		print_length = print_length + ft_pointer_writer(va_arg(args, unsigned int));
 //		else if (format == 'd')
 //			ft_number_writer(va_arg(args, int));
-	else
-		return (1);
-	return (1);
+//	else
+//		return (1);
+	return (print_length);
 }
 
 int	ft_printf(const char *format, ...)
 {	
 	int		i;
 	va_list	args;
-//int print_length;
+	int		print_length;
 	va_start(args, format);
-// print_length = 0;
-i = 0;
+	print_length = 0;
+	i = 0;
+
+//		if (format == NULL)
+//			return (0);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-			ft_args_solver(args, format[i + 1]);
+		print_length = print_length + ft_args_solver(args, format[i + 1]);
 			i++;
 		}
 		else
 		{
-			ft_text_writer(format[i]);
+			print_length = print_length + ft_char_writer(format[i]);			
 		}
-	i++;
+		i++;
 //	printf("format i es %c\n", format[i]);
 	}
-	printf("i = %d\n", i);
+//	printf("i = %d\n", i);
+//	printf("print_length = %d\n", print_length);
 	va_end(args);
-	return (i);
+	return (print_length);
 }
