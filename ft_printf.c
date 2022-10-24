@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/22 18:53:41 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/24 18:01:17 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	ft_string_writer(char *str)
 	return (i);
 }	
 // cas print pointeur %p
+
 static void	ft_pointer_converter(char ptr)
 {
 	if (ptr >= 16)
@@ -57,7 +58,9 @@ static void	ft_pointer_converter(char ptr)
 		else
 			write(1, "y", 1);
 	}	
-}	
+}
+
+
 static int	ft_pointer_writer(unsigned int ptr)
 {
 	int i;
@@ -68,25 +71,49 @@ static int	ft_pointer_writer(unsigned int ptr)
 		write(1, "0", 1);
 	i = i + 1;
 	}	
-	else 
+	else
 	{
 		ft_pointer_converter(ptr);
 	i++;
 	}		
 	return (i);
 }
-/*
-static int ft_number_writer(int nb)
+
+// cas print decimal && print integer %d %i 
+static int	ft_number_writer(int nb)
 {	
-	int	len;
+	int	length;
 	char	*num; 
-	len = 0;
+	length = 0;
 	num = ft_itoa(nb);
-	len = ft_string_writer(num);
+	length = ft_string_writer(num);
 	free(num);
-	return (len);	
+	return (length);	
 }
-*/
+
+// ca unsigned %u
+static int	ft_unsigned_writer(int nb)
+{
+	int	i;
+	char	*num;
+	i = 0;
+	num = ft_itoa(nb);
+	if (num[i] == '-' || num[i] == '+')
+		i++;
+	while (num)
+	{
+		write(1, &num, 1);
+		i++;
+	}
+	return (i);
+}
+
+// cas %
+static int	ft_percent_writer(void)
+{
+	write(1, "%", 1);
+	return (1);
+}	
 
 static int	ft_args_solver(va_list args, const char format)
 {
@@ -99,10 +126,14 @@ static int	ft_args_solver(va_list args, const char format)
 		print_length = print_length + ft_string_writer(va_arg(args, char *));
 	else if (format == 'p')
 		print_length = print_length + ft_pointer_writer(va_arg(args, unsigned int));
-//		else if (format == 'd')
-//			ft_number_writer(va_arg(args, int));
-//	else
-//		return (1);
+	else if (format == 'd')
+		print_length = print_length + ft_number_writer(va_arg(args, int));
+	else if (format == 'i')
+		print_length = print_length + ft_number_writer(va_arg(args, int));
+	else if (format == 'u')
+		print_length = print_length + ft_unsigned_writer(va_arg(args, int));
+	else if (format == '%')
+		print_length = print_length + ft_percent_writer();
 	return (print_length);
 }
 
