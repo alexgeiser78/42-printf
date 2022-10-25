@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:28:20 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/24 18:01:14 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:00:57 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	main(void)
 	char	a = 'q'; // %c
 	char	b[] = "wertyuiop"; // %s
 	char	*c = "asdf"; // %p
-	int		d = 789; // %d
+	int		d = 123; // %d
 	int		e = 456; // %i
-	int		f = -123; // %u
-	int		g = 741; // %x
-	int		h = 258; // %X
+	int		f = 789; // %u
+	int		g = 987; // %x
+	int		h = 654; // %X
 	
 	ft_printf("\n");
 	ft_printf("Pleiades\n");
