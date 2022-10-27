@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/25 17:01:00 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/27 18:00:50 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,19 @@ static int	ft_string_writer(char *str)
 }	
 // cas print pointeur %p
 
-static void	ft_pointer_converter(char ptr)
+static void	ft_hexa_converter(unsigned int nb)
 {
-	if (ptr >= 16)
+	if (nb >= 16)
 	{
-		ptr = ptr / 16;
-		ptr = ptr % 16;
+		ft_hexa_converter(nb / 16);
+		ft_hexa_converter(nb % 16);
 	}
 	else
 	{
-		if (ptr <= 9)
-			write(1, "x", 1);
+		if (nb <= 9)
+			ft_putchar_fd((nb + '0'), 1);
 		else
-			write(1, "y", 1);
+			ft_putchar_fd((nb - 10 + 'a'), 1);
 	}	
 }
 
@@ -73,7 +73,7 @@ static int	ft_pointer_writer(unsigned int ptr)
 	}	
 	else
 	{
-		ft_pointer_converter(ptr);
+		ft_hexa_converter(ptr);
 	i++;
 	}		
 	return (i);
@@ -144,6 +144,28 @@ static int	ft_unsigned_writer(unsigned int nb)
 	return (print_length);
 }
 
+// cas hexadecimal %x
+static int	ft_hexa_len(unsigned int nb)
+{
+	int	len;
+
+	len = 0;
+	while (nb != 0)
+	{	
+		len++;
+		nb = nb / 16;
+	}	
+	return (len);
+}
+static int	ft_hexa_writer(unsigned int nb)
+{	
+	if (nb == 0)
+		return (write(1, "0", 1));
+	else
+		ft_hexa_converter(nb);
+		return (ft_hexa_len(nb));
+}	
+
 // cas %
 static int	ft_percent_writer(void)
 {
@@ -168,6 +190,8 @@ static int	ft_args_solver(va_list args, const char format)
 		print_length = print_length + ft_number_writer(va_arg(args, int));
 	else if (format == 'u')
 		print_length = print_length + ft_unsigned_writer(va_arg(args, unsigned int));
+	else if (format == 'x')
+		print_length = print_length + ft_hexa_writer(va_arg(args, unsigned int));
 	else if (format == '%')
 		print_length = print_length + ft_percent_writer();
 	return (print_length);

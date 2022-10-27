@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:28:20 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/25 17:00:57 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/27 18:00:45 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(void)
 	int		d = 123; // %d
 	int		e = 456; // %i
 	int		f = 789; // %u
-	int		g = 987; // %x
-	int		h = 654; // %X
+	int		g =	987; // %x
+	int		h = 654; // %X("hexa
 	
 	ft_printf("\n");
 	ft_printf("Pleiades\n");
@@ -32,7 +32,7 @@ int	main(void)
 	ft_printf("decimal = %d\n", d);
 	ft_printf("entier = %i\n", e);
 	ft_printf("nonsigne = %u\n", f);
-//	ft_printf("hexadecmin = %x\n", g);
+	ft_printf("hexadecmin = %x\n", g);
 //	ft_printf("hexadecmaj = %X\n", h);
 	ft_printf(" = %%\n");
 	return (0);
