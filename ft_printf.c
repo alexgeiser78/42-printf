@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/10/27 18:00:50 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/10/28 17:29:57 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,25 @@ static int	ft_string_writer(char *str)
 }	
 // cas print pointeur %p
 
-static void	ft_hexa_converter(unsigned int nb)
+static int	ft_hexa_len(unsigned long long nb)
+{
+	int	len;
+
+	len = 0;
+	while (nb != 0)
+	{	
+		len++;
+		nb = nb / 16;
+	}	
+	return (len);
+}
+
+static void	ft_ptr_hexa_converter(unsigned long long nb)
 {
 	if (nb >= 16)
 	{
-		ft_hexa_converter(nb / 16);
-		ft_hexa_converter(nb % 16);
+		ft_ptr_hexa_converter(nb / 16);
+		ft_ptr_hexa_converter(nb % 16);
 	}
 	else
 	{
@@ -59,24 +72,34 @@ static void	ft_hexa_converter(unsigned int nb)
 			ft_putchar_fd((nb - 10 + 'a'), 1);
 	}	
 }
+//ligne 51 si nb est plus grand que 16, nb = nb / 16 jusqu'a ce que nb soit 
+//plus petit que 16, on ecrit le premmier caractere selon regle ligne 56-58
+//ligne 53, le caractere suivant sera le % 16 de la premiere division par 16, 
+//ecrit selon la regle ligne 56 et 58
+//ligne 53, le caractere suivant sera le % 16 de nb...
+//
+//ex:      987   -   -  -  11 
+//    / 16  |  % 16        |
+//          61   -   13    |
+//    / 16  |        |     |
+//          3        d     b
 
-static int	ft_pointer_writer(unsigned int ptr)
+static int	ft_pointer_writer(unsigned long long ptr)
 {
-	int	i;
+	int	print_length;
 
 	write(1, "0x", 2);
-	i = 2;
+	print_length = 2;
 	if (ptr == 0)
 	{
-		write(1, "0", 1);
-	i = i + 1;
+		print_length = print_length + write(1, "0", 1);
 	}	
 	else
 	{
-		ft_hexa_converter(ptr);
-	i++;
+		ft_ptr_hexa_converter(ptr);
+		print_length = print_length + ft_hexa_len(ptr);
 	}		
-	return (i);
+	return (print_length);
 }
 
 // cas print decimal && print integer %d %i 
@@ -145,25 +168,34 @@ static int	ft_unsigned_writer(unsigned int nb)
 }
 
 // cas hexadecimal %x
-static int	ft_hexa_len(unsigned int nb)
+static void	ft_hexa_converter(unsigned int nb, const char format)
 {
-	int	len;
-
-	len = 0;
-	while (nb != 0)
-	{	
-		len++;
-		nb = nb / 16;
+	if (nb >= 16)
+	{
+		ft_hexa_converter(nb / 16, format);
+		ft_hexa_converter(nb % 16, format);
+	}
+	else
+	{
+		if (nb <= 9)
+			ft_putchar_fd((nb + '0'), 1);
+		else
+		{
+			if (format == 'x')
+				ft_putchar_fd((nb - 10 + 'a'), 1);
+			if (format == 'X')
+				ft_putchar_fd((nb - 10 + 'A'), 1);
+		}
 	}	
-	return (len);
 }
-static int	ft_hexa_writer(unsigned int nb)
+
+static int	ft_hexa_writer(unsigned int nb, const char format)
 {	
 	if (nb == 0)
 		return (write(1, "0", 1));
 	else
-		ft_hexa_converter(nb);
-		return (ft_hexa_len(nb));
+		ft_hexa_converter(nb, format);
+	return (ft_hexa_len(nb));
 }	
 
 // cas %
@@ -183,7 +215,7 @@ static int	ft_args_solver(va_list args, const char format)
 	else if (format == 's')
 		print_length = print_length + ft_string_writer(va_arg(args, char *));
 	else if (format == 'p')
-		print_length = print_length + ft_pointer_writer(va_arg(args, unsigned int));
+		print_length = print_length + ft_pointer_writer(va_arg(args, unsigned long long));
 	else if (format == 'd')
 		print_length = print_length + ft_number_writer(va_arg(args, int));
 	else if (format == 'i')
@@ -191,7 +223,9 @@ static int	ft_args_solver(va_list args, const char format)
 	else if (format == 'u')
 		print_length = print_length + ft_unsigned_writer(va_arg(args, unsigned int));
 	else if (format == 'x')
-		print_length = print_length + ft_hexa_writer(va_arg(args, unsigned int));
+		print_length = print_length + ft_hexa_writer(va_arg(args, unsigned int), format);
+	else if (format == 'X')
+		print_length = print_length + ft_hexa_writer(va_arg(args, unsigned int), format);
 	else if (format == '%')
 		print_length = print_length + ft_percent_writer();
 	return (print_length);
