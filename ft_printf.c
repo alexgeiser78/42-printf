@@ -6,16 +6,15 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/11/04 17:37:04 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/11/07 13:09:05 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
-#include <stdio.h> // printf
 
 // cas print char %c
-static int	ft_char_writer(int c)
+int	ft_char_writer(int c)
 {
 	if (write(1, &c, 1) < 0)
 		return (-1);
@@ -24,27 +23,8 @@ static int	ft_char_writer(int c)
 }	
 // ligne 20 protection de la fonction
 
-// cas print string %s
-static int	ft_string_writer(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-	{
-		write(1, "(null)", 6);
-		return (6);
-	}
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-	return (i);
-}
-
 // cas print decimal && print integer %d %i 
-static int	ft_number_writer(int nb)
+int	ft_number_writer(int nb)
 {	
 	int		length;
 	char	*num;
@@ -56,97 +36,14 @@ static int	ft_number_writer(int nb)
 	return (length);
 }
 
-// cas unsigned %u
-static int	ft_nbrlen(unsigned int num)
-{
-	int	i;
-
-	i = 0;
-	while (num != 0)
-	{
-		i++;
-		num = num / 10;
-	}
-	return (i);
-}
-
-static char	*ft_unsigned_itoa(unsigned int nb)
-{
-	char	*num;
-	size_t	len;
-
-	len = ft_nbrlen(nb);
-	num = (char *)malloc(sizeof(char) * (len + 1));
-	if (!num)
-		return (0);
-	num[len] = '\0';
-	while (nb != 0)
-	{
-		num[len - 1] = nb % 10 + 48;
-		nb = nb / 10;
-		len--;
-	}
-	return (num);
-}	
-// ligne 107 exemple: 784 | 784 % 10 = 4 | 4 + 48 = 4 ascii
-// ligne 108 784 / 10 = 78 | retour ligne 107 exemple 78...
-
-static int	ft_unsigned_writer(unsigned int nb)
-{
-	int		print_length;
-	char	*num;
-
-	print_length = 0;
-	if (nb == 0)
-		print_length = print_length + write(1, "0", 1);
-	else
-	{	
-	num = ft_unsigned_itoa(nb);
-	print_length = print_length + ft_string_writer(num);
-		free(num);
-	}
-	return (print_length);
-}
-
-// cas hexadecimal %x
-static void	ft_hexa_converter(unsigned int nb, const char format)
-{
-	if (nb >= 16)
-	{
-		ft_hexa_converter(nb / 16, format);
-		ft_hexa_converter(nb % 16, format);
-	}
-	else
-	{
-		if (nb <= 9)
-			ft_putchar_fd((nb + '0'), 1);
-		else
-		{
-			if (format == 'x')
-				ft_putchar_fd((nb - 10 + 'a'), 1);
-			if (format == 'X')
-				ft_putchar_fd((nb - 10 + 'A'), 1);
-		}
-	}	
-}
-
-static int	ft_hexa_writer(unsigned int nb, const char format)
-{	
-	if (nb == 0)
-		return (write(1, "0", 1));
-	else
-		ft_hexa_converter(nb, format);
-	return (ft_hexa_len(nb));
-}	
-
 // cas %
-static int	ft_percent_writer(void)
+int	ft_percent_writer(void)
 {
 	write(1, "%", 1);
 	return (1);
 }	
 
-static int	ft_args_solver(va_list args, const char format)
+int	ft_args_solver(va_list args, const char format)
 {
 	int	print_length;
 
