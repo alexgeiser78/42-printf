@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/11/07 13:09:05 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/11/07 15:15:26 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_char_writer(int c)
 	else
 		return (1);
 }	
-// ligne 20 protection de la fonction
+// ligne 19 protection de la fonction
 
 // cas print decimal && print integer %d %i 
 int	ft_number_writer(int nb)
@@ -39,8 +39,10 @@ int	ft_number_writer(int nb)
 // cas %
 int	ft_percent_writer(void)
 {
-	write(1, "%", 1);
-	return (1);
+	if (write(1, "%", 1) < 0)
+		return (-1);
+	else		
+		return (1);
 }	
 
 int	ft_args_solver(va_list args, const char format)

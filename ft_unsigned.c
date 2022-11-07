@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:12:48 by ageiser           #+#    #+#             */
-/*   Updated: 2022/11/07 13:09:00 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/11/07 15:30:31 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*ft_unsigned_itoa(unsigned int nb)
 	}
 	return (num);
 }	
-// ligne 107 exemple: 784 | 784 % 10 = 4 | 4 + 48 = 4 ascii
-// ligne 108 784 / 10 = 78 | retour ligne 107 exemple 78...
+// ligne 42 exemple: 784 | 784 % 10 = 4 | 4 + 48 = 4 ascii
+// ligne 43 784 / 10 = 78 | retour ligne 107 exemple 78...
 
 int	ft_unsigned_writer(unsigned int nb)
 {

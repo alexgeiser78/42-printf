@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:55:03 by ageiser           #+#    #+#             */
-/*   Updated: 2022/11/04 17:37:08 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/11/07 15:28:43 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	ft_ptr_hexa_converter(unsigned long long nb)
 			ft_putchar_fd((nb - 10 + 'a'), 1);
 	}	
 }
-//ligne 51 si nb est plus grand que 16, nb = nb / 16 jusqu'a ce que nb soit 
-//plus petit que 16, on ecrit le premmier caractere selon regle ligne 56-58
-//ligne 53, le caractere suivant sera le % 16 de la premiere division par 16, 
-//ecrit selon la regle ligne 56 et 58
-//ligne 53, le caractere suivant sera le % 16 de nb...
+//ligne 33 si nb est plus grand que 16, nb = nb / 16 jusqu'a ce que nb soit 
+//plus petit que 16, on ecrit le premmier caractere selon regle ligne 41-43
+//ligne 36, le caractere suivant sera le % 16 de la premiere division par 16, 
+//ecrit selon la regle ligne 41 et 43
+//ligne 36, le caractere suivant sera le % 16 de nb...
 //
 //ex:      987   -   -  -  11 
 //    / 16  |  % 16        |
