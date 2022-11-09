@@ -6,7 +6,7 @@
 /*   By: ageiser <ageiser@student.42barcelo>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 13:02:00 by ageiser           #+#    #+#             */
-/*   Updated: 2022/11/07 15:15:26 by ageiser          ###   ########.fr       */
+/*   Updated: 2022/11/07 16:48:40 by ageiser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_percent_writer(void)
 {
 	if (write(1, "%", 1) < 0)
 		return (-1);
-	else		
+	else
 		return (1);
 }	
 
